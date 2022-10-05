@@ -4,12 +4,6 @@ import { AddressForm } from './AddressForm';
 import { useMultiStepForm } from './useMultiStepForm';
 import { UserForm } from './UserForm';
 
-type UserData = {
-  firstName: string;
-  lastName: string;
-  age: string;
-};
-
 type FormData = {
   firstName: string;
   lastName: string;
@@ -20,7 +14,6 @@ type FormData = {
   zip: string;
   email: string;
   password: string;
-  updateFields: (fields: UserData) => void;
 };
 
 const INITIAL_DATA: FormData = {
@@ -52,7 +45,10 @@ function App() {
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
-    next();
+    if (!isLastStep) {
+      return next();
+    }
+    alert('Succesful Account Creation');
   }
 
   return (
@@ -65,6 +61,7 @@ function App() {
         margin: '1rem',
         borderRadius: '.5rem',
         fontFamily: 'Arial',
+        maxWidth: 'max-content',
       }}
     >
       <form onSubmit={onSubmit}>
